@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: SpringSecurityConnectDB
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost:1444;databaseName=SpringSecurityDB;TrustServerCertificate=True
+    username: sa
+    password: P@ssw0rd
+  jpa:
+    show-sql: True
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
