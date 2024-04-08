@@ -6,7 +6,9 @@ import lombok.Setter;
 import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.UuidGenerator;
 
+import javax.management.relation.Role;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,10 +38,11 @@ public class UserDao {
     @Column(name = "create_date")
     private Date create_date;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role"
             , joinColumns = @JoinColumn(name = "user_id")
             , inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<RoleDao> role;
+    @Column(name = "role")
+    private Set<RoleDao> role = new HashSet<>();
 
 }

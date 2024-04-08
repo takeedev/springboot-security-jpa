@@ -21,9 +21,9 @@ public class InitConfig {
     private Set<RoleDao> prepareData() {
         Set<RoleDao> data = new HashSet<>();
         RoleDao role1 = new RoleDao();
-        role1.setRole_name(RoleEnum.ADMIN.name());
+        role1.setName(RoleEnum.ADMIN);
         RoleDao role2 = new RoleDao();
-        role2.setRole_name(RoleEnum.USER.name());
+        role2.setName(RoleEnum.USER);
         data.add(role1);
         data.add(role2);
         return data;

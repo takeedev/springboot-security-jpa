@@ -1,5 +1,6 @@
 package com.tpk.SpringSecurityConnectDB.dao;
 
+import com.tpk.SpringSecurityConnectDB.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,10 +20,8 @@ public class RoleDao {
     @Column(name = "role_id")
     private UUID role_id;
 
-    @Column(name = "role_name")
-    private String role_name;
-
-    @ManyToMany(mappedBy = "role")
-    private Set<UserDao> user;
+    @Column(name = "name")
+    @Enumerated(EnumType.STRING)
+    private RoleEnum name;
 
 }

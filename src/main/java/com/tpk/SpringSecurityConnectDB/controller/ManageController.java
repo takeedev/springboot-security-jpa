@@ -3,17 +3,17 @@ package com.tpk.SpringSecurityConnectDB.controller;
 import com.tpk.SpringSecurityConnectDB.dao.RoleDao;
 import com.tpk.SpringSecurityConnectDB.dao.UserDao;
 import com.tpk.SpringSecurityConnectDB.dto.UserDto;
+import com.tpk.SpringSecurityConnectDB.enums.RoleEnum;
 import com.tpk.SpringSecurityConnectDB.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.management.relation.Role;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -27,10 +27,14 @@ public class ManageController {
 
     @PostMapping("/addUser")
     private UserDao addUser(@RequestBody UserDto userDto) {
-        Set<RoleDao> setRole = new HashSet<>();
-        RoleDao roleDao = new RoleDao();
-        roleDao.setRole_name(userDto.role());
-        setRole.add(roleDao);
+        Set<RoleDao> addRole = new HashSet<>();
+        RoleDao roleDao;
+        if (Objects.equals(userDto.role(), RoleEnum.ADMIN.name())) {
+            roleDao = userService.findByName(RoleEnum.ADMIN);
+        } else {
+            roleDao = userService.findByName(RoleEnum.USER);
+            addRole.add(roleDao);
+        }
 
         UserDao userDao = new UserDao();
         userDao.setUsername(userDto.username());
@@ -38,7 +42,7 @@ public class ManageController {
         userDao.setActive(userDto.active());
         userDao.setCreate_by(userDto.create_by());
         userDao.setCreate_date(userDto.Create_date());
-        roleDao.setRole_name(setRole.toString());
+        userDao.setRole(addRole);
 
         return userService.createUser(userDao);
     }
