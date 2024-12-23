@@ -8,8 +8,6 @@ import com.tpk.SpringSecurityConnectDB.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @AllArgsConstructor
 public class UserServiceImp implements UserService {
@@ -24,7 +22,8 @@ public class UserServiceImp implements UserService {
 
     @Override
     public RoleDao findByName(RoleEnum name) {
-        return roleRepository.findByName(name).orElseThrow(() -> new RuntimeException("error"));
+        return roleRepository.findByName(name)
+                .orElseThrow(() -> new RuntimeException("error"));
     }
 
 }
